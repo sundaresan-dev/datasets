@@ -1,8 +1,6 @@
 # datases — Cleaned Example Datasets 📁
 
-A curated collection of small, cleaned example datasets and lightweight tooling for data-practice and quick EDA. This repository contains the original raw data files, simple cleaning scripts, and preview notebooks to help you get started quickly.
-
-This project preserves provenance: original raw CSVs are stored in `raw_dataset/`. Cleaning scripts (if used) live under `scripts/` and produce cleaned outputs under `cleaned_dataset/` when executed.
+A curated collection of small example datasets for data-practice and quick EDA. This repository contains the original raw data files and preview notebooks to help you get started quickly.
 ---
 
 **Table of contents**
@@ -40,7 +38,7 @@ Raw dataset files are in `raw_dataset/`. Major datasets include:
 - `restaurant_tips_bill_info.csv` — Restaurant bills & tips
 - `population.xlsx` — Excel file
 
-Backups (if any) keep original timestamps and are preserved.
+Raw dataset files are stored in `raw_dataset/`.
 ---
 
 ## Quick start 🔎
@@ -65,26 +63,7 @@ print(df.head())
 
 ---
 
-## Cleaning scripts (optional)
-
-Two helper scripts are provided in `scripts/`:
-
-- `generate_cleaned_and_notebooks.py` — copies raw CSVs into `cleaned_dataset/<name>/` and creates a minimal `01_clean_preview.ipynb` for each dataset.
-- `full_clean_all.py` — simple CSV-only cleaner that normalizes headers, trims whitespace, deduplicates rows, and formats detected date columns to India format (`DD-MM-YYYY`).
-
-Run (optional):
-
-```bash
-python3 scripts/generate_cleaned_and_notebooks.py
-python3 scripts/full_clean_all.py
-```
-
-Note: `full_clean_all.py` uses only the Python standard library. For better numeric/date parsing and stronger cleaning, install `pandas` and re-run the more advanced cleaner instead (if included):
-
-```bash
-pip install --user pandas
-# then run a pandas-enabled cleaner when available
-```
+<!-- Cleaning scripts and cleaned outputs have been omitted from documentation. Raw files are available in `raw_dataset/`. -->
 ---
 
 ## Reports
