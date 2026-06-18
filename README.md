@@ -1,125 +1,110 @@
-# Dataset Practice 📁
+# datases — Cleaned Example Datasets 📁
 
-A curated collection of small datasets for learning, practicing, and demonstrating data analysis workflows. Filenames have been normalized to be descriptive and human-readable. Backup copies that existed originally were preserved and renamed with `_bak_<TIMESTAMP>` to keep provenance.
+A curated collection of small, cleaned example datasets and lightweight tooling for data-practice and quick EDA. This repository contains the original raw data files, simple cleaning scripts, and preview notebooks to help you get started quickly.
 
+This project preserves provenance: original raw CSVs are stored in `raw_dataset/`. Cleaning scripts (if used) live under `scripts/` and produce cleaned outputs under `cleaned_dataset/` when executed.
 ---
 
 **Table of contents**
 
-- **Overview**
-- **Datasets**
-- **Quick preview (shell & Python)**
-- **Suggested analyses**
-- **Rollback & maintenance**
-- **Contributing**
-- **License & attribution**
+- Overview
+- Datasets
+- Quick start
+- Cleaning scripts
+- Reports
+- Contributing & license
+---
+
+## Overview 🧭
+
+The repository is intended for learning and prototyping. Files have been organized so you can find raw data quickly, run cleaning pipelines, and open minimal notebooks for exploration.
+
+Naming conventions used here:
+- human-readable filenames
+- backups use `_bak_<TIMESTAMP>` suffix where present
 
 ---
 
-**Overview** 🧭
+## Datasets (short descriptions) 📚
 
-This folder contains a variety of CSV datasets (and a single Excel file) intended for quick exercises and tutorials. Filenames were renamed for clarity — they reflect the dataset subject and, when present, include `_bak_` timestamps for original backups.
+Raw dataset files are in `raw_dataset/`. Major datasets include:
+- `brazil_amazon_fires_annual.csv` — Amazon-region fire counts by year/month/state
+- `grocery_outlet_sales_blinkit.csv` — Grocery items + outlet sales
+- `zomato_restaurants_philippines.csv` — Restaurant listings and ratings
+- `flipkart_orders_2024.csv` — Marketplace order data sample
+- `ecommerce_sales_orders.csv` — E-commerce orders and totals
+- `student_performance_scores.csv` — Student demographics and scores
+- `titanic_passenger_manifest.csv` — Titanic passenger manifest
+- `hr_employee_metrics.csv` — HR metrics dataset
+- `youtube_channel_rankings.csv` — YouTube channel stats
+- `restaurant_tips_bill_info.csv` — Restaurant bills & tips
+- `population.xlsx` — Excel file
 
-**Why these names?**
-- Human-readable: easier to identify dataset purpose at a glance.
-- Safe: backups were kept and suffixed with `_bak_<timestamp>`.
-- Consistent: lowercase, underscores, descriptive tokens.
-
+Backups (if any) keep original timestamps and are preserved.
 ---
 
-**Datasets (files & short descriptions)** 📚
+## Quick start 🔎
 
-- `brazil_amazon_fires_annual.csv` — Amazon-region fire counts by year/month/state (original: `amazon_fires.csv`).
-- `grocery_outlet_sales_blinkit.csv` — Grocery items and outlet sales data (original: `blinkit_data.csv`).
-- `zomato_restaurants_philippines.csv` — Zomato restaurant listings and ratings (original: `Dataset .csv`).
-- `zomato_restaurants_philippines_bak_20260618092900.csv` — Backup of the above.
-- `employee_personal_employment.csv` — Employee records: name, dept, salary, join date (original: `employee_data.csv`).
-- `employee_personal_employment_bak_20260618092900.csv` — Backup of the above.
-- `flipkart_orders_2024.csv` — Marketplace order data / sales sample (original: `flipkart_sales.csv`).
-- `flipkart_orders_2024_bak_20260618092900.csv` — Backup of the above.
-- `hr_employee_metrics.csv` — HR metrics: projects, monthly hours, tenure, turnover flag (original: `hr_data.csv`).
-- `ecommerce_sales_orders.csv` — E-commerce order-level totals with dates and regions (original: `sales_dataset.csv`).
-- `student_performance_scores.csv` — Student demographics and exam scores (original: `student_data.csv`).
-- `restaurant_tips_bill_info.csv` — Restaurant bills and tips dataset (original: `tips.csv`).
-- `titanic_passenger_manifest.csv` — Titanic passenger manifest (pclass, name, sex, age, fare, survived) (original: `titanic.csv`).
-- `titanic_passenger_manifest_bak_20260618092900.csv` — Backup of the Titanic file.
-- `youtube_channel_rankings.csv` — Channel ranking, subscribers, views (original: `youtube_channel.csv`).
-- `youtube_channel_rankings_bak_20260618092900.csv` — Backup of the YouTube file.
-- `population.xlsx` — Excel file (not modified).
-- `scripts/` — Small utilities and helpers present in the folder (not modified).
-
----
-
-**Quick preview — shell & Python** 🔎
-
-List files in the folder:
+Clone the repo and inspect raw files:
 
 ```bash
-ls -lah
+git clone https://github.com/sundaresan-dev/datases.git
+cd datases
+ls -lah raw_dataset
 ```
 
-Preview header lines from a CSV (shell):
-
-```bash
-head -n 3 brazil_amazon_fires_annual.csv
-```
-
-Open a dataset with pandas (Python):
+Open a CSV quickly with pandas (recommended):
 
 ```python
 import pandas as pd
-
-# load
-df = pd.read_csv('titanic_passenger_manifest.csv')
-
-# quick checks
+df = pd.read_csv('raw_dataset/titanic_passenger_manifest.csv')
 print(df.shape)
-print(df.dtypes)
+print(df.columns)
 print(df.head())
-
-# preview multiple files programmatically
-from pathlib import Path
-for f in Path('.').glob('*_*.csv'):
-	print(f.name)
-	print(pd.read_csv(f, nrows=3))
-	print('---')
 ```
 
 ---
 
-**Suggested starter analyses** 📊
+## Cleaning scripts (optional)
 
-- Titanic: survival rate by class / sex / age group.
-- Student scores: correlations between study hours and math reading/writing.
-- HR metrics: churn prediction (left) using tenure, monthly hours, projects.
-- E-commerce & Flipkart: top products by revenue, monthly trends.
-- YouTube: top channels by subscribers/views, normalized metrics.
+Two helper scripts are provided in `scripts/`:
 
-Each dataset is intentionally small and ready for quick EDA, visualization, feature engineering, and modelling tasks.
+- `generate_cleaned_and_notebooks.py` — copies raw CSVs into `cleaned_dataset/<name>/` and creates a minimal `01_clean_preview.ipynb` for each dataset.
+- `full_clean_all.py` — simple CSV-only cleaner that normalizes headers, trims whitespace, deduplicates rows, and formats detected date columns to India format (`DD-MM-YYYY`).
+
+Run (optional):
+
+```bash
+python3 scripts/generate_cleaned_and_notebooks.py
+python3 scripts/full_clean_all.py
+```
+
+Note: `full_clean_all.py` uses only the Python standard library. For better numeric/date parsing and stronger cleaning, install `pandas` and re-run the more advanced cleaner instead (if included):
+
+```bash
+pip install --user pandas
+# then run a pandas-enabled cleaner when available
+```
+---
+
+## Reports
+
+If you run `full_clean_all.py` the script generates:
+
+- `cleaned_dataset/cleaning_report.json` — machine-readable cleaning report per file
+- `cleaned_dataset/DATA_SUMMARIES.md` — human-readable summary per dataset
+
+These files summarize row counts, columns, and missing counts.
+
+## Contributing & license
+
+If you improve cleaning logic or add notebooks, please open a PR. Add a concise commit message following conventional commits (e.g., `feat: add EDA notebook for titanic`).
+
+Unless specified otherwise, assume these example datasets are provided for learning and demo purposes — verify redistribution rights before publishing.
 
 ---
 
-**Rollback & maintenance** 🔁
-
-Backups were preserved by renaming originals with `_bak_<TIMESTAMP>` where applicable. If you want to restore the original filenames, run the corresponding `mv` commands in this folder. Example (from the repo root):
-
-```bash
-mv -n brazil_amazon_fires_annual.csv 'amazon_fires.csv'
-mv -n grocery_outlet_sales_blinkit.csv 'blinkit_data.csv'
-mv -n zomato_restaurants_philippines.csv 'Dataset .csv'
-mv -n zomato_restaurants_philippines_bak_20260618092900.csv 'Dataset .csv.bak.20260618092900'
-# ... (other mv commands available in the assistant output)
-```
-
-Tip: add `-v` to `mv` to see each rename logged, or run in `bash -x` for debugging.
-
-If you prefer to remove backup files (cleanup), run:
-
-```bash
-rm *_bak_*.csv
-```
-
-Be careful — that permanently deletes backup files.
+Generated and maintained by the repository owner. For changes, edit files and push to the `main` branch on GitHub.
 
 ---
 
