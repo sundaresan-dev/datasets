@@ -1,4 +1,3 @@
-df = pd.read_csv('titanic_passenger_manifest.csv')
 # Dataset Practice 📁
 
 A curated collection of small datasets for learning, practicing, and demonstrating data analysis workflows. Filenames have been normalized to be descriptive and human-readable. Backup copies that existed originally were preserved and renamed with `_bak_<TIMESTAMP>` to keep provenance.
